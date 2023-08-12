@@ -34105,7 +34105,8 @@ var App = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, App);
     _this = _super.call(this, props);
     _this.state = {
-      employees: []
+      personas: [],
+      ciudades: []
     };
     return _this;
   }
@@ -34115,58 +34116,104 @@ var App = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
       client({
         method: 'GET',
-        path: '/api/employees'
+        path: '/api/personas'
       }).done(function (response) {
         _this2.setState({
-          employees: response.entity._embedded.employees
+          personas: response.entity._embedded.personas
+        });
+      });
+      client({
+        method: 'GET',
+        path: '/api/ciudades'
+      }).done(function (response) {
+        _this2.setState({
+          ciudades: response.entity._embedded.ciudades
         });
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement(EmployeeList, {
-        employees: this.state.employees
-      });
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h2", null, "Lista de Personas"), /*#__PURE__*/React.createElement(PersonaList, {
+        personas: this.state.personas
+      }), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("h2", null, "Lista de Ciudades"), /*#__PURE__*/React.createElement(CiudadList, {
+        ciudades: this.state.ciudades
+      }));
     }
   }]);
   return App;
 }(React.Component);
-var EmployeeList = /*#__PURE__*/function (_React$Component2) {
-  _inherits(EmployeeList, _React$Component2);
-  var _super2 = _createSuper(EmployeeList);
-  function EmployeeList() {
-    _classCallCheck(this, EmployeeList);
+var PersonaList = /*#__PURE__*/function (_React$Component2) {
+  _inherits(PersonaList, _React$Component2);
+  var _super2 = _createSuper(PersonaList);
+  function PersonaList() {
+    _classCallCheck(this, PersonaList);
     return _super2.apply(this, arguments);
   }
-  _createClass(EmployeeList, [{
+  _createClass(PersonaList, [{
     key: "render",
     value: function render() {
-      var employees = this.props.employees.map(function (employee) {
-        return /*#__PURE__*/React.createElement(Employee, {
-          key: employee._links.self.href,
-          employee: employee
+      var personas = this.props.personas.map(function (persona) {
+        return /*#__PURE__*/React.createElement(Persona, {
+          key: persona._links.self.href,
+          persona: persona
         });
       });
-      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "First Name"), /*#__PURE__*/React.createElement("th", null, "Last Name"), /*#__PURE__*/React.createElement("th", null, "Description")), employees));
+      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("th", null, "Apellido"), /*#__PURE__*/React.createElement("th", null, "Cuidad")), personas));
     }
   }]);
-  return EmployeeList;
+  return PersonaList;
 }(React.Component);
-var Employee = /*#__PURE__*/function (_React$Component3) {
-  _inherits(Employee, _React$Component3);
-  var _super3 = _createSuper(Employee);
-  function Employee() {
-    _classCallCheck(this, Employee);
+var CiudadList = /*#__PURE__*/function (_React$Component3) {
+  _inherits(CiudadList, _React$Component3);
+  var _super3 = _createSuper(CiudadList);
+  function CiudadList() {
+    _classCallCheck(this, CiudadList);
     return _super3.apply(this, arguments);
   }
-  _createClass(Employee, [{
+  _createClass(CiudadList, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.employee.firstName), /*#__PURE__*/React.createElement("td", null, this.props.employee.lastName), /*#__PURE__*/React.createElement("td", null, this.props.employee.description));
+      var ciudades = this.props.ciudades.map(function (ciudad) {
+        return /*#__PURE__*/React.createElement(Ciudad, {
+          key: ciudad._links.self.href,
+          ciudad: ciudad
+        });
+      });
+      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("th", null, "Codigo Postal"), /*#__PURE__*/React.createElement("th", null, "Region")), ciudades));
     }
   }]);
-  return Employee;
+  return CiudadList;
+}(React.Component);
+var Persona = /*#__PURE__*/function (_React$Component4) {
+  _inherits(Persona, _React$Component4);
+  var _super4 = _createSuper(Persona);
+  function Persona() {
+    _classCallCheck(this, Persona);
+    return _super4.apply(this, arguments);
+  }
+  _createClass(Persona, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.persona.nombre), /*#__PURE__*/React.createElement("td", null, this.props.persona.apellido), /*#__PURE__*/React.createElement("td", null, this.props.persona.cuidad));
+    }
+  }]);
+  return Persona;
+}(React.Component);
+var Ciudad = /*#__PURE__*/function (_React$Component5) {
+  _inherits(Ciudad, _React$Component5);
+  var _super5 = _createSuper(Ciudad);
+  function Ciudad() {
+    _classCallCheck(this, Ciudad);
+    return _super5.apply(this, arguments);
+  }
+  _createClass(Ciudad, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.ciudad.nombre), /*#__PURE__*/React.createElement("td", null, this.props.ciudad.codigoPostal), /*#__PURE__*/React.createElement("td", null, this.props.ciudad.region));
+    }
+  }]);
+  return Ciudad;
 }(React.Component);
 ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.getElementById('react'));
 

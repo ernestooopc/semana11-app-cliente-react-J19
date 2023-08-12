@@ -1,8 +1,13 @@
-@server = https://texai-glowing-couscous-pgprxq9gwh76xw-8080.preview.app.github.dev
+@server = https://ernestooopc-glorious-eureka-xjg6w6q74wrc97j-8080.app.github.dev
 ###
-GET {{server}}/api/employees 
+GET {{server}}/api/ciudades
+
 ###
-POST {{server}}/api/employees
+GET {{server}}/api/personas
+
+###
+
+POST {{server}}/api/ciudades
 Content-Type: application/json
 
-{"firstName": "Mi", "lastName": "Aplicación", "description": "React"}
+{"nombre": "VMT", "codigoPostal": "16545", "region": "Lima"}
