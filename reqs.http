@@ -11,3 +11,7 @@ POST {{server}}/api/ciudades
 Content-Type: application/json
 
 {"nombre": "VMT", "codigoPostal": "16545", "region": "Lima"}
+
+
+###
+GET {{server}}/api/departamentos
