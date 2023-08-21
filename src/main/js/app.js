@@ -10,6 +10,7 @@ const VerPersonaPage = require('./pages/ver-persona');
 const VerCiudadPage = require('./pages/ver-ciudad');
 const EditarPersonaPage = require("./pages/editar-persona");
 const VerDepartamentoPage = require("./pages/ver-departamento");
+const NuevoCiudadanoPage = require("./pages/nuevo-ciudadano");
 
 const router = createBrowserRouter([
 	{path:'/', element:<HomePage/>},
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
 	{path:'/nuevo-persona', element:<NuevoPersonaPage/>},
 	{path:'/ver-ciudad/:id', element:<VerCiudadPage/>},
 	{path:'/editar-persona/:id', element:<EditarPersonaPage/>},
-	{path:'/ver-departamento/:id', element: <VerDepartamentoPage/>}
+	{path:'/ver-departamento/:id', element: <VerDepartamentoPage/>},
+	{path:'/ver-departamento/:id/nuevo-ciudadano',element:<NuevoCiudadanoPage/>}
 ])
 
 

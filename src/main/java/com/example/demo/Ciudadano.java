@@ -26,6 +26,8 @@ public class Ciudadano {
     @JoinColumn(name="id_ciudad")
     private Ciudad ciudad;
 
+    private Ciudadano() {}
+
     public Ciudadano(Departamento departamento, Persona persona, Ciudad ciudad) {
         this.departamento = departamento;
         this.persona = persona;

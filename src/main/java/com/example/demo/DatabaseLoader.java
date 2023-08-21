@@ -43,14 +43,18 @@ public class DatabaseLoader implements CommandLineRunner {
 		Ciudad ciudad = new Ciudad("Villa el salvdor","15452","Lima");
 		this.repositoryC.save(ciudad);
 
-		Persona persona = new Persona("Ernesto", "Caceres", "Lima");
-		this.repositoryP.save(persona);
+		Persona ernesto = new Persona("Ernesto", "Caceres", "Lima");
+		this.repositoryP.save(ernesto);
+
+		Persona aldo = new Persona("Ernesto", "Caceres", "Lima");
+		this.repositoryP.save(aldo);
+		
+		Ciudad vmt = new Ciudad("Villa el salvdor","15452","Lima");
+		this.repositoryC.save(vmt);
 
 
-
-
-
-		this.repositoryCI.save(new Ciudadano(depa,persona,ciudad));
+		this.repositoryCI.save(new Ciudadano(depa,ernesto,ciudad));
+		this.repositoryCI.save(new Ciudadano(depa,aldo,vmt));
 
 
 	}

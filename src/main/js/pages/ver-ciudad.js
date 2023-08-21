@@ -1,6 +1,6 @@
 const React = require('react');
 const { useParams } = require('react-router-dom');
-const { useState } = require('react');
+const { useState,useEffect } = require('react');
 const client = require('../client');
 const { Link } = require ('react-router-dom');
 
@@ -10,10 +10,14 @@ const VerCiudadPage = () => {
     let {id} = useParams();
     const [ciudad,setCiudad] = useState({});
 
-    client({
-        method:'GET',
-        path:'/api/ciudades/'+ id
-    }).done(Response=>setCiudad(Response.entity))
+    useEffect(()=>{
+        client({
+            method:'GET',
+            path:'/api/ciudades/'+ id
+        }).done(Response=>setCiudad(Response.entity))
+    }, [])
+
+
     return(
         <>
         <h1>Ver Ciudad</h1>

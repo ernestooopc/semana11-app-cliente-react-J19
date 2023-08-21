@@ -15,3 +15,10 @@ Content-Type: application/json
 
 ###
 GET {{server}}/api/departamentos
+
+###
+GET {{server}}/api/departamentos/1/formacion
+
+
+###
+GET {{server}}/api/ciudadanos

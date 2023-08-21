@@ -40847,6 +40847,7 @@ var VerPersonaPage = __webpack_require__(/*! ./pages/ver-persona */ "./src/main/
 var VerCiudadPage = __webpack_require__(/*! ./pages/ver-ciudad */ "./src/main/js/pages/ver-ciudad.js");
 var EditarPersonaPage = __webpack_require__(/*! ./pages/editar-persona */ "./src/main/js/pages/editar-persona.js");
 var VerDepartamentoPage = __webpack_require__(/*! ./pages/ver-departamento */ "./src/main/js/pages/ver-departamento.js");
+var NuevoCiudadanoPage = __webpack_require__(/*! ./pages/nuevo-ciudadano */ "./src/main/js/pages/nuevo-ciudadano.js");
 var router = createBrowserRouter([{
   path: '/',
   element: /*#__PURE__*/React.createElement(HomePage, null)
@@ -40868,6 +40869,9 @@ var router = createBrowserRouter([{
 }, {
   path: '/ver-departamento/:id',
   element: /*#__PURE__*/React.createElement(VerDepartamentoPage, null)
+}, {
+  path: '/ver-departamento/:id/nuevo-ciudadano',
+  element: /*#__PURE__*/React.createElement(NuevoCiudadanoPage, null)
 }]);
 ReactDOM.render( /*#__PURE__*/React.createElement(React.StrictMode, null, /*#__PURE__*/React.createElement(RouterProvider, {
   router: router
@@ -41333,6 +41337,116 @@ module.exports = NuevoCiudadPage;
 
 /***/ }),
 
+/***/ "./src/main/js/pages/nuevo-ciudadano.js":
+/*!**********************************************!*\
+  !*** ./src/main/js/pages/nuevo-ciudadano.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _require = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
+  useState = _require.useState,
+  useEffect = _require.useEffect;
+var _require2 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js"),
+  Link = _require2.Link,
+  useParams = _require2.useParams;
+var client = __webpack_require__(/*! ../client */ "./src/main/js/client.js");
+var NuevoCiudadanoPage = function NuevoCiudadanoPage() {
+  var _useParams = useParams(),
+    id = _useParams.id;
+  var _useState = useState([]),
+    _useState2 = _slicedToArray(_useState, 2),
+    personas = _useState2[0],
+    setPersonas = _useState2[1];
+  var _useState3 = useState([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    ciudades = _useState4[0],
+    setCiudades = _useState4[1];
+  var _useState5 = useState(''),
+    _useState6 = _slicedToArray(_useState5, 2),
+    idPersona = _useState6[0],
+    setIdPersona = _useState6[1];
+  var _useState7 = useState(''),
+    _useState8 = _slicedToArray(_useState7, 2),
+    idCiudad = _useState8[0],
+    setIdCiudad = _useState8[1];
+  var handleSubmit = function handleSubmit(evento) {
+    evento.preventDefault();
+    client({
+      method: 'POST',
+      path: '/api/ciudadanos',
+      entity: {
+        departamento: 'http://localhost:8080/api/departamentos/' + id,
+        persona: 'http://localhost:8080/api/personas/' + idPersona,
+        ciudad: 'http://localhost:8080/api/ciudades/' + idCiudad
+      },
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).done(function () {
+      window.location = '/';
+    });
+  };
+  useEffect(function () {
+    client({
+      method: 'GET',
+      path: '/api/personas'
+    }).done(function (response) {
+      setPersonas(response.entity._embedded.personas);
+    });
+    client({
+      method: 'GET',
+      path: '/api/ciudades'
+    }).done(function (response) {
+      setCiudades(response.entity._embedded.ciudades);
+    });
+  }, []);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Nuevo Ciudadano"), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "persona"
+  }, "Persona"), /*#__PURE__*/React.createElement("select", {
+    name: "persona",
+    id: "persona",
+    onChange: function onChange(e) {
+      setIdPersona(e.target.value);
+    }
+  }, personas.map(function (persona) {
+    var value = persona._links.self.href.split('/').slice(-1);
+    return /*#__PURE__*/React.createElement("option", {
+      key: value,
+      value: value
+    }, persona.nombre);
+  })), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("label", null, "Ciudad"), /*#__PURE__*/React.createElement("select", {
+    name: "ciudad",
+    id: "ciudad",
+    onChange: function onChange(e) {
+      setIdCiudad(e.target.value);
+    }
+  }, ciudades.map(function (ciudad) {
+    var value = ciudad._links.self.href.split('/').slice(-1);
+    return /*#__PURE__*/React.createElement("option", {
+      key: value,
+      value: value
+    }, ciudad.nombre);
+  })), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("input", {
+    type: "submit",
+    value: "Nuevo Ciudadano"
+  })), /*#__PURE__*/React.createElement(Link, {
+    to: "/"
+  }, "Volver"));
+};
+module.exports = NuevoCiudadanoPage;
+
+/***/ }),
+
 /***/ "./src/main/js/pages/nuevo-persona.js":
 /*!********************************************!*\
   !*** ./src/main/js/pages/nuevo-persona.js ***!
@@ -41438,7 +41552,8 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _require = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js"),
   useParams = _require.useParams;
 var _require2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
-  useState = _require2.useState;
+  useState = _require2.useState,
+  useEffect = _require2.useEffect;
 var client = __webpack_require__(/*! ../client */ "./src/main/js/client.js");
 var _require3 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js"),
   Link = _require3.Link;
@@ -41449,12 +41564,14 @@ var VerCiudadPage = function VerCiudadPage() {
     _useState2 = _slicedToArray(_useState, 2),
     ciudad = _useState2[0],
     setCiudad = _useState2[1];
-  client({
-    method: 'GET',
-    path: '/api/ciudades/' + id
-  }).done(function (Response) {
-    return setCiudad(Response.entity);
-  });
+  useEffect(function () {
+    client({
+      method: 'GET',
+      path: '/api/ciudades/' + id
+    }).done(function (Response) {
+      return setCiudad(Response.entity);
+    });
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Ver Ciudad"), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("td", null, ciudad.nombre)), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Codigo Postal"), /*#__PURE__*/React.createElement("td", null, ciudad.codigoPostal)), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Region"), /*#__PURE__*/React.createElement("td", null, ciudad.region))), /*#__PURE__*/React.createElement(Link, {
     to: "/"
   }, "Volver"));
@@ -41488,10 +41605,14 @@ var _require3 = __webpack_require__(/*! react-router-dom */ "./node_modules/reac
 var VerDepartamentoPage = function VerDepartamentoPage() {
   var _useParams = useParams(),
     id = _useParams.id;
-  var _useState = useState({}),
+  var _useState = useState([]),
     _useState2 = _slicedToArray(_useState, 2),
-    departamento = _useState2[0],
-    setDepartamento = _useState2[1];
+    ciudadanos = _useState2[0],
+    setCiudadanos = _useState2[1];
+  var _useState3 = useState({}),
+    _useState4 = _slicedToArray(_useState3, 2),
+    departamento = _useState4[0],
+    setDepartamento = _useState4[1];
   useEffect(function () {
     client({
       method: 'GET',
@@ -41499,8 +41620,24 @@ var VerDepartamentoPage = function VerDepartamentoPage() {
     }).done(function (Response) {
       return setDepartamento(Response.entity);
     });
+    client({
+      method: "GET",
+      path: "/api/departamentos/" + id + "/formacion"
+    }).done(function (Response) {
+      return setCiudadanos(Response.entity);
+    });
   }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Ver Departamento"), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("td", null, departamento.nombre))), /*#__PURE__*/React.createElement(Link, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Ver Departamento"), /*#__PURE__*/React.createElement("table", {
+    border: "1"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, departamento.nombre)))), /*#__PURE__*/React.createElement("h2", null, "Gente"), /*#__PURE__*/React.createElement("table", {
+    border: "1"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Persona"), /*#__PURE__*/React.createElement("th", null, "Ciudades"))), /*#__PURE__*/React.createElement("tbody", null, ciudadanos.map(function (ciudadano) {
+    return /*#__PURE__*/React.createElement("tr", {
+      key: ciudadano.ID
+    }, /*#__PURE__*/React.createElement("td", null, ciudadano.PERSONA), /*#__PURE__*/React.createElement("td", null, ciudadano.CIUDAD));
+  }))), /*#__PURE__*/React.createElement(Link, {
+    to: "/ver-departamento/".concat(id, "/nuevo-ciudadano")
+  }, "Nuevo Ciudadano"), /*#__PURE__*/React.createElement(Link, {
     to: "/"
   }, "Volver"));
 };
@@ -41525,7 +41662,8 @@ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var _require = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js"),
   useParams = _require.useParams;
 var _require2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"),
-  useState = _require2.useState;
+  useState = _require2.useState,
+  useEffect = _require2.useEffect;
 var client = __webpack_require__(/*! ../client */ "./src/main/js/client.js");
 var _require3 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js"),
   Link = _require3.Link;
@@ -41536,12 +41674,14 @@ var VerPersonaPage = function VerPersonaPage() {
     _useState2 = _slicedToArray(_useState, 2),
     persona = _useState2[0],
     setPersona = _useState2[1];
-  client({
-    method: 'GET',
-    path: '/api/personas/' + id
-  }).done(function (Response) {
-    return setPersona(Response.entity);
-  });
+  useEffect(function () {
+    client({
+      method: 'GET',
+      path: '/api/personas/' + id
+    }).done(function (Response) {
+      return setPersona(Response.entity);
+    });
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "Ver Persona"), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("td", null, persona.nombre)), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apellido"), /*#__PURE__*/React.createElement("td", null, persona.apellido)), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Ciudad"), /*#__PURE__*/React.createElement("td", null, persona.cuidad))), /*#__PURE__*/React.createElement(Link, {
     to: "/"
   }, "Volver"));
